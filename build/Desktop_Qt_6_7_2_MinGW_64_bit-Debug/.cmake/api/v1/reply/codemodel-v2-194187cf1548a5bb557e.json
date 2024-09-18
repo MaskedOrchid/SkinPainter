@@ -1,0 +1,79 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-29bcfe1f14c5eb581151.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "SkinPainter",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "SkinPainter::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-SkinPainter-Debug-7dd0d53262201b45b3e8.json",
+					"name" : "SkinPainter",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "SkinPainter_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-SkinPainter_autogen-Debug-9f98c7ccd4940dbbf94c.json",
+					"name" : "SkinPainter_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "SkinPainter_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-SkinPainter_autogen_timestamp_deps-Debug-b6df493fd314f084f841.json",
+					"name" : "SkinPainter_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/lelands/Documents/SkinPainter/SkinPainter/build/Desktop_Qt_6_7_2_MinGW_64_bit-Debug",
+		"source" : "C:/Users/lelands/Documents/SkinPainter/SkinPainter"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}
