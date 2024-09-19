@@ -275,6 +275,12 @@
 			null
 		],
 		[
+			"C:/Users/lelands/Documents/SkinPainter/SkinPainter/toolbar.h",
+			"MU",
+			"EWIEGA46WW/moc_toolbar.cpp",
+			null
+		],
+		[
 			"C:/Users/lelands/Documents/SkinPainter/SkinPainter/viewskin.h",
 			"MU",
 			"EWIEGA46WW/moc_viewskin.cpp",
@@ -369,6 +375,11 @@
 		],
 		[
 			"C:/Users/lelands/Documents/SkinPainter/SkinPainter/pixelcanvas.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/lelands/Documents/SkinPainter/SkinPainter/toolbar.cpp",
 			"MU",
 			null
 		],

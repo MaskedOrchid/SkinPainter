@@ -2,26 +2,32 @@
 
 #include <QMouseEvent>
 #include <QPainter>
+#include <QPointF>
+
+//rixel= the scaled up rect representing the size of a pixel in the scaled up image
 
 PixelCanvas::PixelCanvas(QWidget *parent,QSize size): QWidget(parent)
 {
     ActualSize=size;
-    RenderSize=ActualSize;
-    PixelRatio=1;//at the start they are one to one
+    RenderSize=size;
+    PixelRatio=QPoint(1,1);//at the start they are one to one
     setAttribute(Qt::WA_StaticContents);
-    QImage newImage(size, QImage::Format_RGB32);
+    //setting the render image for all of this
+    QImage newImage(size, QImage::Format_ARGB32); //QImage::Format_ARGB32 should be the standard channels for pngs
     RenderImage=newImage;
-    RenderImage.fill(qRgb(255, 255, 255));
+    RenderImage.fill(qRgba(255, 255, 255,0));
+    ActualImage=newImage;
     update();
 }
 bool PixelCanvas::openImage(const QString &fileName){
     QImage loadedImage;
     if (!loadedImage.load(fileName))
         return false;
-
+    //setting the actual image to the open image
+    ActualImage=loadedImage;
+    //scaling up the new opened image
     QSize newSize = loadedImage.size().expandedTo(RenderSize);
     ActualSize=loadedImage.size();
-    printf("Newsize : (%i,%i)\n",newSize.rwidth(),newSize.rheight());
     //resize updates the ratios and sizes
     resizeImage(&loadedImage, newSize);
     RenderImage = loadedImage;
@@ -62,9 +68,22 @@ void PixelCanvas::paintEvent(QPaintEvent *event){
 }
 void PixelCanvas::resizeEvent(QResizeEvent *event){
     if (width() > RenderImage.width() || height() > RenderImage.height()) {
+        //if the window was scaled up
         int newWidth = qMax(width(), RenderImage.width());
         int newHeight = qMax(height(), RenderImage.height());
-        resizeImage(&RenderImage, QSize(newWidth, newHeight));
+        //finding the smaller of the two to maintain the square display of the image
+        int newsize=qMin(newWidth,newHeight);
+        //need to repaint it, not just change the scale
+        resizeImage(&RenderImage, QSize(newsize,newsize));
+        update();
+    }else if (width() < RenderImage.width() || height() < RenderImage.height()) {
+        //if the window was scaled down
+        int newWidth = qMin(width(), RenderImage.width());
+        int newHeight = qMin(height(), RenderImage.height());
+        //finding the smaller of the two to maintain the square display of the image
+        int newsize=qMin(newWidth,newHeight);
+        //need to repaint it, not just change the scale
+        resizeImage(&RenderImage, QSize(newsize,newsize));
         update();
     }
     QWidget::resizeEvent(event);
@@ -72,26 +91,39 @@ void PixelCanvas::resizeEvent(QResizeEvent *event){
 
 void PixelCanvas::drawPixel(QMouseEvent *event){
     //need to draw the pixels and translate based off of the ratios
-    QPainter Renpainter(&RenderImage);
-    Renpainter.setPen(QPen(myPenColor, myPenWidth, Qt::SolidLine,Qt::SquareCap,Qt::RoundJoin));
-    //translating to the orignal coordinates
-    //get to the nearest pixel place, how many ratio steps to this x, coord, then place it in the center ( since we know the pixel location
-    //same for the y value, and thus draw the rectangle from that point to the next,
-    //and update the other image with the actual pixels so we have the actual and the rendered image
-    int x = event->pos().x();
-    int y = event->pos().y();
-    Renpainter.drawPoint(x, y);
+    QPainter Actpainter(&ActualImage);
+    //Actpainter.setBrush(QBrush(myPenColor));
+    Actpainter.setPen(QPen(myPenColor, myPenWidth, Qt::SolidLine,Qt::SquareCap,Qt::RoundJoin));
+
+    //get to the nearest pixel place, ( how many rixels we need tp step before getting to the equivlent pixel location)
+    float x=event->pos().x()/PixelRatio.x();
+    float y=event->pos().y()/PixelRatio.y();
+    //drawing that pixel
+    qDebug()<< "pixel : ("<< x<<","<<y<<")";
+    Actpainter.drawPoint(x,y);
     update();
+    //need to update the render canvas
+    RenderImage=ActualImage;
+    resizeImage(&RenderImage,RenderSize);
 }
 void PixelCanvas::resizeImage(QImage *image, const QSize &newSize){
     RenderSize=newSize;
-    //figuring out the pixel ratio
-    PixelRatio=RenderSize.rwidth()/(ActualSize.rwidth());
-    printf("PixelRatio: %f\n",PixelRatio);
-    printf("RenderSize : (%i,%i)\n",RenderSize.rwidth(),RenderSize.rheight());
-    printf("ActualSize : (%i,%i)\n",ActualSize.rwidth(),ActualSize.rheight());
-    this->setPenWidth(PixelRatio);
+    //figuring out the rixel ratio
+    qreal xrixel=(RenderSize.width()*1.0)/(ActualSize.width());
+    qreal yrixel=(RenderSize.height()*1.0)/(ActualSize.height());
+    PixelRatio=QPointF(xrixel,yrixel);
+    //setting the pen width to align with the new rixel size
+    //this->setPenWidth(PixelRatio.x());
+    qDebug()<< "PixelRatio : ("<< PixelRatio.x()<<","<<PixelRatio.y()<<")";
+    qDebug()<< "RenderSize : ("<< RenderSize.width()<<","<<RenderSize.height()<<")";
+    qDebug()<< "ActualSize : ("<< ActualSize.width()<<","<<ActualSize.height()<<")";
+
     if (image->size() == newSize)
         return;
     *image=image->scaled(newSize,Qt::KeepAspectRatio);
+    QImage newImage(newSize, QImage::Format_ARGB32);
+    newImage.fill(qRgba(255, 255, 255,0));
+    QPainter painter(&newImage);
+    painter.drawImage(QPoint(0, 0), *image);
+    *image = newImage;
 }

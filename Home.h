@@ -42,7 +42,7 @@ public:
     Home(QWidget *parent = nullptr);
 
 protected:
-
+//remake this to have it contain, and instantae everything.
 private slots:
     void open();
     void penColor();

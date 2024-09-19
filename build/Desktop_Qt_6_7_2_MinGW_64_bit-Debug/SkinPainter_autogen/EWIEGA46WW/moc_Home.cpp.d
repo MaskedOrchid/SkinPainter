@@ -2,6 +2,7 @@ C:/Users/lelands/Documents/SkinPainter/SkinPainter/build/Desktop_Qt_6_7_2_MinGW_
   C:/Users/lelands/Documents/SkinPainter/SkinPainter/build/Desktop_Qt_6_7_2_MinGW_64_bit-Debug/SkinPainter_autogen/moc_predefs.h \
   C:/Qt/6.7.2/mingw_64/include/QtCore/QList \
   C:/Qt/6.7.2/mingw_64/include/QtCore/QObject \
+  C:/Qt/6.7.2/mingw_64/include/QtCore/QPointF \
   C:/Qt/6.7.2/mingw_64/include/QtCore/QRect \
   C:/Qt/6.7.2/mingw_64/include/QtCore/QSize \
   C:/Qt/6.7.2/mingw_64/include/QtCore/QSizeF \

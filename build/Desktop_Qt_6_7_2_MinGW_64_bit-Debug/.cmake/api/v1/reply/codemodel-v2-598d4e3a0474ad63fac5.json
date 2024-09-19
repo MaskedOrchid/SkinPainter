@@ -7,7 +7,7 @@
 				{
 					"build" : ".",
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-.-Debug-29bcfe1f14c5eb581151.json",
+					"jsonFile" : "directory-.-Debug-cece44fcab3b42f953c1.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.16"
@@ -44,7 +44,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "SkinPainter::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-SkinPainter-Debug-5b641742427760f29fb5.json",
+					"jsonFile" : "target-SkinPainter-Debug-91f141ed7e20c7fde51e.json",
 					"name" : "SkinPainter",
 					"projectIndex" : 0
 				},

@@ -4,13 +4,16 @@
 #include <QWidget>
 #include <QMouseEvent>
 #include <QPainter>
+#include <QPointF>
 
 class PixelCanvas: public QWidget
 {
     Q_OBJECT
 public:
-    PixelCanvas(QWidget *parent = nullptr,QSize size=QSize(10,10));
+    PixelCanvas(QWidget *parent = nullptr,QSize size=QSize(64,64));
+    // make this accept an image file, or a section of one, allowing for the user to draw on that section only
     bool openImage(const QString &fileName);
+    //maybe a function to check if the draw area is invalid, so if it does not have am image accosated with it yet.
     void setPenColor(const QColor &newColor);
 
     QColor penColor() const { return myPenColor; }
@@ -21,6 +24,8 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
     void paintEvent(QPaintEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
+    //add saving functions
+    //add the ablitly to draw like you would on a drawing app
 private:
     void resizeImage(QImage *image, const QSize &newSize);
     void setPenWidth(int newWidth);// ensuring that the petwidth is equal to the ratio size?
@@ -34,7 +39,7 @@ private:
     QPoint lastPoint;
     QSize ActualSize;
     QSize RenderSize;
-    float PixelRatio;
+    QPointF PixelRatio;// change this to a Point, for x and y ratio size
 };
 #endif // PIXELCANVAS_H
 

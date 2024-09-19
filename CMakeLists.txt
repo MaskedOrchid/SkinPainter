@@ -26,6 +26,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
         viewskin.h viewskin.cpp
         pixelcanvas.h pixelcanvas.cpp
+        toolbar.h toolbar.cpp
 
 
     )
